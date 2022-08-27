@@ -1,5 +1,4 @@
 import express from "express";
-import { appendFile } from 'fs';
 import fs from 'fs/promises'
 const chuck = await fs.readFile("./chuck.json");
 let jchuck = JSON.parse(chuck);
@@ -20,11 +19,13 @@ function FilterJoke(dados, filter) {
     return jokes;   
 }
 
+// to test http://localhost:8081/Random-Joke
 app.get("/Random-Joke", (req,res) => {
     let joke = RandomJoke(jchuck);
     res.send(`${joke}`);    
 })
 
+// to test http://localhost:8081/Filter-Joke/uzi
 app.get("/Filter-Joke/:filter", (req, res) => {
     let joke = FilterJoke(jchuck, req.params.filter);
     res.send(`${joke}`);  
@@ -39,8 +40,3 @@ app.get("/Filter-Joke", (req,res) => {
 app.listen(8081, function () {
     console.log("Servidor na porta 8081");
 });
-
-// definindo a rota raiz
-//app.get("/", function (req, res) {
-//        res.sendFile("/Chuck_Norris_jokes/index.html");
-//});
